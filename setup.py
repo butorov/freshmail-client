@@ -31,6 +31,7 @@ requirements = [
 
 test_requirements = [
     'pytest',
+    'pytest-cov',
 ]
 
 setup(
