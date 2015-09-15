@@ -27,3 +27,8 @@ def test_make_request(adapter):
         response = adapter.ping()
     assert response.status_code == 200
     assert response.json() == TEST_CONTENT
+
+
+def test_unknown_method(adapter):
+    with pytest.raises(AttributeError):
+        adapter.unknown_method()
