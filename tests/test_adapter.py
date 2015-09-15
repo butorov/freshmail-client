@@ -1,5 +1,8 @@
 # coding: utf-8
 import pytest
+from httmock import HTTMock
+
+from .conftest import response_mock, TEST_CONTENT
 
 
 def test_initial(adapter):
@@ -17,3 +20,10 @@ def test_initial(adapter):
 )
 def test_get_sign(adapter, data, method_name, expected):
     assert adapter.get_sign(data, method_name) == expected
+
+
+def test_make_request(adapter):
+    with HTTMock(response_mock):
+        response = adapter.ping()
+    assert response.status_code == 200
+    assert response.json() == TEST_CONTENT
