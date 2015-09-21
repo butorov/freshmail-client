@@ -24,16 +24,24 @@ class PyTest(test):
         sys.exit(errno)
 
 
+PYPY = hasattr(sys, 'pypy_translation_info')
+
+
 requirements = [
-    'ujson',
     'requests',
 ]
 
 test_requirements = [
-    'pytest',
-    'pytest-cov',
+    'pytest>=2.7.0',
+    'pytest-cov>=1.7',
+    'coverage==3.7.1',
     'httmock',
 ]
+
+
+if not PYPY:
+    requirements.append('ujson')
+
 
 setup(
     name='freshmail-client',
@@ -43,6 +51,17 @@ setup(
     author='Butorov Viacheslav',
     author_email='butorovv@gmail.com',
     description='Freshmail client for Python',
+    classifiers=[
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: Implementation :: CPython',
+        'Programming Language :: Python :: Implementation :: PyPy',
+    ],
     install_requires=requirements,
     tests_require=test_requirements,
     cmdclass={'test': PyTest},

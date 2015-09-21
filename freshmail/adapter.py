@@ -2,8 +2,9 @@
 import hashlib
 import types
 
-import ujson
 import requests
+
+from ._compat import json
 
 
 class FreshMailAdapter(object):
@@ -29,11 +30,11 @@ class FreshMailAdapter(object):
 
     def get_sign(self, data, method_name):
         return hashlib.sha1(
-            ''.join((self.api_key, '/', self.postfix, method_name, data, self.api_secret))
+            ''.join((self.api_key, '/', self.postfix, method_name, data, self.api_secret)).encode('utf8')
         ).hexdigest()
 
     def _post(self, data, method_name):
-        data = ujson.dumps(data)
+        data = json.dumps(data)
         method_name = method_name.replace('_', '/')
         return requests.post(
             ''.join((self.base_url, self.postfix, method_name)),
