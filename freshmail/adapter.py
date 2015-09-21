@@ -29,7 +29,7 @@ class FreshMailAdapter(object):
 
     def get_sign(self, data, method_name):
         return hashlib.sha1(
-            ''.join((self.api_key, '/', self.postfix, method_name, data, self.api_secret))
+            ''.join((self.api_key, '/', self.postfix, method_name, data, self.api_secret)).encode('utf8')
         ).hexdigest()
 
     def _post(self, data, method_name):
