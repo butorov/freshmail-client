@@ -30,8 +30,8 @@ requirements = [
 ]
 
 test_requirements = [
-    'pytest',
-    'pytest-cov',
+    'pytest>=2.7.0',
+    'pytest-cov>=1.7',
     'coverage==3.7.1',
     'httmock',
 ]
