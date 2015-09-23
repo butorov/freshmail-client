@@ -24,9 +24,6 @@ class PyTest(test):
         sys.exit(errno)
 
 
-PYPY = hasattr(sys, 'pypy_translation_info')
-
-
 requirements = [
     'requests',
 ]
@@ -38,8 +35,7 @@ test_requirements = [
     'httmock',
 ]
 
-
-if not PYPY:
+if not hasattr(sys, 'pypy_translation_info'):
     requirements.append('ujson')
 
 
