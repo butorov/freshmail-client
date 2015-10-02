@@ -25,7 +25,6 @@ class PyTest(test):
 
 
 requirements = [
-    'ujson',
     'requests',
 ]
 
@@ -36,6 +35,10 @@ test_requirements = [
     'httmock',
 ]
 
+if not hasattr(sys, 'pypy_translation_info'):
+    requirements.append('ujson')
+
+
 setup(
     name='freshmail-client',
     version='0.1',
@@ -44,6 +47,17 @@ setup(
     author='Butorov Viacheslav',
     author_email='butorovv@gmail.com',
     description='Freshmail client for Python',
+    classifiers=[
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: Implementation :: CPython',
+        'Programming Language :: Python :: Implementation :: PyPy',
+    ],
     install_requires=requirements,
     tests_require=test_requirements,
     cmdclass={'test': PyTest},

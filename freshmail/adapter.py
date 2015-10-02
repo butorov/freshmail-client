@@ -2,8 +2,9 @@
 import hashlib
 import types
 
-import ujson
 import requests
+
+from ._compat import json
 
 
 class FreshMailAdapter(object):
@@ -33,7 +34,7 @@ class FreshMailAdapter(object):
         ).hexdigest()
 
     def _post(self, data, method_name):
-        data = ujson.dumps(data)
+        data = json.dumps(data)
         method_name = method_name.replace('_', '/')
         return requests.post(
             ''.join((self.base_url, self.postfix, method_name)),
