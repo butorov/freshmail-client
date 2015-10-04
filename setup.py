@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 import sys
+import platform
 
 from distutils.core import setup
 from setuptools.command.test import test
@@ -30,14 +31,16 @@ requirements = [
 
 test_requirements = [
     'pytest>=2.7.0',
-    'pytest-cov>=1.7',
-    'coverage==3.7.1',
     'httmock',
 ]
 
-if not hasattr(sys, 'pypy_translation_info'):
-    requirements.append('ujson')
+JYTHON = platform.system() == 'Java'
 
+
+if not hasattr(sys, 'pypy_translation_info') and not JYTHON:
+    requirements.append('ujson')
+if not JYTHON:
+    requirements.extend(['pytest-cov==1.8', 'coverage==3.7.1'])
 
 setup(
     name='freshmail-client',
@@ -56,6 +59,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: Implementation :: CPython',
+        'Programming Language :: Python :: Implementation :: Jython',
         'Programming Language :: Python :: Implementation :: PyPy',
     ],
     install_requires=requirements,

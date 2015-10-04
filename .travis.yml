@@ -9,10 +9,16 @@ env:
   - TOX_ENV=py35
   - TOX_ENV=pypy
   - TOX_ENV=pypy3
+  - JYTHON=true
 install:
-  - pip install tox codecov
+  - if [ -z "$JYTHON" ]; then pip install codecov; fi
+  - if [ "$TOX_ENV" ]; then pip install tox; fi
+before_install:
+  - export JYTHON_URL='http://search.maven.org/remotecontent?filepath=org/python/jython-installer/2.7.0/jython-installer-2.7.0.jar'
+  - if [ "$JYTHON" ]; then wget $JYTHON_URL -O jython_installer.jar; java -jar jython_installer.jar -s -d $HOME/jython; export PATH=$HOME/jython/bin:$PATH; fi
 script:
-  - tox -e $TOX_ENV
+  - if [ "$JYTHON" ]; then jython setup.py test; fi
+  - if [ "$TOX_ENV" ]; then tox -e $TOX_ENV; fi
 matrix:
   allow_failures:
     - env: TOX_ENV=py35
