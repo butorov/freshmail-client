@@ -30,9 +30,12 @@ requirements = [
 ]
 
 test_requirements = [
-    'pytest>=2.7.0',
+    'pytest==2.8.0',
     'httmock',
 ]
+
+if sys.version_info[:2] == (3, 2):
+    test_requirements.append('coverage==3.7.1')
 
 JYTHON = platform.system() == 'Java'
 
@@ -40,7 +43,8 @@ JYTHON = platform.system() == 'Java'
 if not hasattr(sys, 'pypy_translation_info') and not JYTHON:
     requirements.append('ujson')
 if not JYTHON:
-    requirements.extend(['pytest-cov==1.8', 'coverage==3.7.1'])
+    test_requirements.append('pytest-cov')
+
 
 setup(
     name='freshmail-client',
